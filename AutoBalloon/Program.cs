@@ -9,12 +9,12 @@ namespace AutoBalloon
         {
             var swInstance = new SldWorks.SldWorks();
 
-            var part = (ModelDoc2)swInstance.ActiveDoc;
-            var drawing = (DrawingDoc)part;
+            var model = (ModelDoc2)swInstance.ActiveDoc;
+            var drawing = (DrawingDoc)model;
 
             var boolStatus = drawing.ActivateView("Drawing View1");
 
-            boolStatus = part.Extension.SelectByID2("Drawing View1",
+            boolStatus = model.Extension.SelectByID2("Drawing View1",
                 "DRAWINGVIEW", 0, 0, 0, false, 0, null, 0);
 
             var autoballoonParameters = drawing.CreateAutoBalloonOptions();
@@ -35,6 +35,8 @@ namespace AutoBalloon
             autoballoonParameters.EditBalloonOption = (int)swEditBalloonOption_e.swEditBalloonOption_Resequence;
 
             var vNotes = drawing.AutoBalloon5(autoballoonParameters);
+
+            model.ClearSelection2(true);
         }
     }
 }
