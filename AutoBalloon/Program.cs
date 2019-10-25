@@ -18,10 +18,10 @@ namespace AutoBalloon
                 "DRAWINGVIEW", 0, 0, 0, false, 0, null, 0);
 
             var autoballoonParameters = drawing.CreateAutoBalloonOptions();
-
+            
             autoballoonParameters.Layout = (int)swBalloonLayoutType_e.swDetailingBalloonLayout_Square;
             autoballoonParameters.ReverseDirection = false;
-            autoballoonParameters.IgnoreMultiple = true;
+            autoballoonParameters.IgnoreMultiple = false;
             autoballoonParameters.InsertMagneticLine = true;
             autoballoonParameters.LeaderAttachmentToFaces = true;
             autoballoonParameters.Style = (int)swBalloonStyle_e.swBS_Box;
@@ -35,6 +35,15 @@ namespace AutoBalloon
             autoballoonParameters.EditBalloonOption = (int)swEditBalloonOption_e.swEditBalloonOption_Resequence;
 
             var vNotes = drawing.AutoBalloon5(autoballoonParameters);
+
+            // Drawing View2 if exists
+            var status = drawing.ActivateView("Drawing View2");
+            if (status)
+            {
+                boolStatus = model.Extension.SelectByID2("Drawing View2",
+                    "DRAWINGVIEW", 0, 0, 0, false, 0, null, 0);
+                drawing.AutoBalloon5(autoballoonParameters);
+            }
 
             model.ClearSelection2(true);
         }
